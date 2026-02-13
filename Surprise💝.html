@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Something For You 💙</title>
+
+<style>
+body{
+    margin:0;
+    background:linear-gradient(135deg,#1e1e2f,#302b63);
+    color:white;
+    font-family:'Segoe UI',sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    text-align:center;
+    overflow:hidden;
+}
+
+.box{
+    max-width:600px;
+    padding:30px;
+}
+
+button{
+    margin-top:20px;
+    padding:10px 20px;
+    border:none;
+    border-radius:25px;
+    background:#ff7eb3;
+    color:white;
+    cursor:pointer;
+    font-size:15px;
+    transition:0.3s;
+}
+button:hover{
+    transform:scale(1.05);
+}
+
+img{
+    width:260px;
+    border-radius:15px;
+    margin-top:15px;
+}
+
+.hidden{
+    display:none;
+}
+
+.fade{
+    animation:fadeIn 2s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+.shayari{
+    margin-top:15px;
+    font-style:italic;
+    color:#ffd6e0;
+    font-size:18px;
+}
+
+.confetti{
+    position:absolute;
+    width:8px;
+    height:8px;
+    top:0;
+    animation:fall 4s linear infinite;
+}
+
+@keyframes fall{
+    to{transform:translateY(100vh) rotate(720deg);}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgm">
+<source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="box" id="scene1">
+    <h2 id="typing"></h2>
+</div>
+
+<div class="box hidden" id="scene2">
+    <h2>Before I say anything…</h2>
+    <p>Tell me… are you smiling right now? 😌</p>
+    <button onclick="next('scene3')">Maybe 💗</button>
+    <button onclick="next('scene3')">Of course 😊</button>
+</div>
+
+<div class="box hidden" id="scene3">
+    <h2>Good.</h2>
+    <p>Because what comes next… is special.</p>
+    <button onclick="next('scene4')">Continue ▶</button>
+</div>
+
+<div class="box hidden fade" id="scene4">
+    <img src="her.jpg">
+    <div class="shayari">
+        “Mehngi h tu kohinoor se bhi, Khubsurat h tu hoor se bhi,
+        Yu toh dur se dikhte h chaand me bhi daag,
+        Magar bedaag h tu dur se bhi...💝”
+    </div>
+    <button onclick="finalScene()">Reveal 🎂</button>
+</div>
+
+<div class="box hidden fade" id="final">
+    <h1>HAPPY BIRTHDAY SHIVUU 🎂💙</h1>
+    <h3>You are not just my best friend…  
+    You are my comfort, my chaos partner, my forever person, I wish that jo bhi tujhe apni life me chahiye woh tu achieve kree and I am always there for you💖</h3>
+</div>
+<script>
+
+var intro="There’s something I’ve been meaning to tell you…";
+var i=0;
+
+function typeText(){
+    if(i<intro.length){
+        document.getElementById("typing").innerHTML+=intro.charAt(i);
+        i++;
+        setTimeout(typeText,60);
+    } else {
+        setTimeout(()=>next('scene2'),1500);
+    }
+}
+
+function next(id){
+    document.querySelectorAll(".box").forEach(b=>b.classList.add("hidden"));
+    document.getElementById(id).classList.remove("hidden");
+}
+
+function finalScene(){
+    document.querySelectorAll(".box").forEach(b=>b.classList.add("hidden"));
+    document.getElementById("final").classList.remove("hidden");
+
+    var music=document.getElementById("bgm");
+    music.volume=0.4;
+    music.play();
+
+    for(let i=0;i<100;i++){
+        let conf=document.createElement("div");
+        conf.classList.add("confetti");
+        conf.style.left=Math.random()*100+"vw";
+        conf.style.backgroundColor=
+        "hsl("+Math.random()*360+",100%,70%)";
+        conf.style.animationDuration=(Math.random()*3+2)+"s";
+        document.body.appendChild(conf);
+
+        setTimeout(()=>{conf.remove();},5000);
+    }
+}
+
+typeText();
+
+</script>
+
+</body>
+</html>
